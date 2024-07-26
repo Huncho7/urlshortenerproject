@@ -74,7 +74,10 @@ app.post("/api/shorturl", (req, res) => {
       // const shortUrl = `${req.protocol}://${req.get("host")}/api/shorturl/${shortId}`;
       const shortUrl = shortId;
 
-      res.json({ shortUrl: shortUrl, longUrl: longUrl });
+      res.json({ 
+        original_url: longUrl,
+        short_url : shortUrl
+       });
     }
   });
 
