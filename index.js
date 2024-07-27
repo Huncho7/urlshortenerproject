@@ -33,7 +33,7 @@ app.post("/api/shorturl/", (req, res) => {
   dns.lookup(urlObject.hostname, (err, address, family) => {
     if (err) {
       res.json({
-        error: "Invalid URL",
+        error: "invalid url",
       });
     } else {
       var short_url = Math.floor(Math.random() * 100000).toString();
