@@ -27,39 +27,39 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.post("/api/shorturl/", (req, res) => {
-  const originalUrl = req.body.url;
-  const urlObject = new URL(originalUrl);
+  const original_url = req.body.url;
+  const urlObject = new URL(original_url);
 
   dns.lookup(urlObject.hostname, (err, address, family) => {
     if (err) {
       res.json({
-        originalUrl: originalUrl,
-        shortenedUrl: "Invalid URL",
+        original_url: original_url,
+        short_url: "Invalid URL",
       });
     } else {
-      var shortenedUrl = Math.floor(Math.random() * 100000).toString();
+      var short_url = Math.floor(Math.random() * 100000).toString();
 
-      urlDatabase[shortenedUrl] = originalUrl;
+      urlDatabase[short_url] = original_url;
 
       res.json({
-        originalURL: originalUrl,
-        shortenedURL: shortenedUrl,
+        original_url: original_url,
+        short_url: short_url,
       });
     }
   });
 });
 
 // Endpoint to handle redirecting short URL to long URL
-app.get("/api/shorturl/:shortenedUrl", (req, res) => {
-  const shortenedUrl = req.params.shortenedUrl;
-  const originalUrl = urlDatabase[shortenedUrl];
+app.get("/api/shorturl/:short_url", (req, res) => {
+  const short_url = req.params.short_url;
+  const original_url = urlDatabase[short_url];
 
-  if (!originalUrl) {
+  if (!original_url) {
     return res
       .status(404)
       .json({ error: "No short URL found for the given input." });
   }
-  res.redirect(originalUrl);
+  res.redirect(original_url);
 });
 
 app.listen(port, function () {
